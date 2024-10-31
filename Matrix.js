@@ -33,7 +33,23 @@ class Matrix {
     });
     return result;
   }
+  static deserialize(data) {
+    if (typeof data === 'string') {
+      data = JSON.parse(data);
+    }
 
+    let matrix = new Matrix(data.rows, data.columns);
+    matrix.data = data.data;  // Assign the array of arrays directly
+    return matrix;
+  }
+
+  serialize() {
+    return JSON.stringify({
+      rows: this.rows,
+      columns: this.columns,
+      data: this.data
+    });
+  }
   // Element-wise or scalar multiplication
   multiply(n) {
     if (n instanceof Matrix) {
